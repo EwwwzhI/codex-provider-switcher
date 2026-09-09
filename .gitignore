@@ -1,0 +1,39 @@
+.venv/
+.build-venv/
+.runtime-venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest-*/
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
+*.spec
+artifacts/
+
+# Local editor and Windows files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.lnk
+*.log
+
+# Credentials and local environment
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+auth.json
+
+# Never commit a real Codex data directory or switcher backup
+.codex-global-state.json
+config.toml
+sessions/
+provider-switcher/
+state_*.sqlite*
+thread_history_*.sqlite*
+*.jsonl
