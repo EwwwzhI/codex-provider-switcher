@@ -151,6 +151,8 @@ pwsh -NoProfile -File .\build.ps1 -Python .\.venv\Scripts\python.exe
 
 构建脚本会运行全部测试、生成单文件 GUI/CLI EXE，并执行打包后的 CLI JSON 与 GUI 启动冒烟测试。详细验收范围见 [VALIDATION.md](VALIDATION.md)。
 
+GitHub Actions 会在每次推送到 `main` 以及每个 Pull Request 上使用 Windows 和 Python 3.12 自动运行同一套测试。
+
 ## 项目结构
 
 | 路径 | 说明 |
