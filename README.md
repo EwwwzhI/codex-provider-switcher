@@ -11,7 +11,8 @@
 <p align="center">
   <img alt="Platform: Windows" src="https://img.shields.io/badge/platform-Windows-0078D4">
   <img alt="Python: 3.12+" src="https://img.shields.io/badge/Python-3.12%2B-3776AB">
-  <img alt="Tests: 56 passed" src="https://img.shields.io/badge/tests-56%20passed-2E8B57">
+  <a href="https://github.com/EwwwzhI/codex-provider-switcher/actions/workflows/tests.yml"><img alt="Tests" src="https://github.com/EwwwzhI/codex-provider-switcher/actions/workflows/tests.yml/badge.svg"></a>
+  <a href="https://github.com/EwwwzhI/codex-provider-switcher/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/EwwwzhI/codex-provider-switcher"></a>
   <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-F4C430">
 </p>
 
@@ -39,7 +40,7 @@ Codex 可以在配置中定义多个 model provider，但已有会话通常会�
 
 ## 下载与安装
 
-普通用户建议从 GitHub Releases 下载发布压缩包，而不是下载 Source code。发布包应至少包含：
+普通用户建议从 [GitHub Releases](https://github.com/EwwwzhI/codex-provider-switcher/releases/latest) 下载发布压缩包，而不是下载 Source code。发布包包含：
 
 ```text
 CodexProviderSwitcher.exe   图形界面
@@ -150,6 +151,8 @@ pwsh -NoProfile -File .\build.ps1 -Python .\.venv\Scripts\python.exe
 ```
 
 构建脚本会运行全部测试、生成单文件 GUI/CLI EXE，并执行打包后的 CLI JSON 与 GUI 启动冒烟测试。详细验收范围见 [VALIDATION.md](VALIDATION.md)。
+
+版本变化见 [CHANGELOG.md](CHANGELOG.md)，安全问题请按 [SECURITY.md](SECURITY.md) 私下报告。
 
 GitHub Actions 会在每次推送到 `main` 以及每个 Pull Request 上使用 Windows 和 Python 3.12 自动运行同一套测试。
 

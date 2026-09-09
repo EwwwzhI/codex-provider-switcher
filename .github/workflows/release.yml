@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release-windows:
+    name: Build Windows release
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Test and build
+        shell: pwsh
+        run: |
+          $python = (Get-Command python).Source
+          .\build.ps1 -Python $python
+
+      - name: Package release and checksum
+        id: package
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $archive = "codex-provider-switcher-$tag-windows-x64.zip"
+          Compress-Archive -Path .\dist\* -DestinationPath $archive -CompressionLevel Optimal
+          $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $archive).Hash.ToLowerInvariant()
+          "$hash  $archive" | Set-Content -LiteralPath SHA256SUMS.txt -Encoding ascii
+          "archive=$archive" >> $env:GITHUB_OUTPUT
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: codex-provider-switcher-${{ github.ref_name }}-windows-x64
+          path: |
+            ${{ steps.package.outputs.archive }}
+            SHA256SUMS.txt
+          if-no-files-found: error
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          gh release create "${{ github.ref_name }}" `
+            "${{ steps.package.outputs.archive }}" `
+            SHA256SUMS.txt `
+            --verify-tag `
+            --title "Codex Provider Switcher ${{ github.ref_name }}" `
+            --notes-file RELEASE_NOTES.md
